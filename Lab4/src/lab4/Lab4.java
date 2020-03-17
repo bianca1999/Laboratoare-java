@@ -13,9 +13,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
 import java.util.TreeSet;
-import java.util.stream.Collectors;
+import optional.Matching;
+import optional.Problem;
 
 /**
  *
@@ -56,6 +56,8 @@ public class Lab4 {
         hospitalSet.add(h0);
         hospitalSet.add(h1);
         hospitalSet.add(h2);
+        
+       
       
         //Setez preferintele fiecarui rezident dupa modelul descris
         List<Hospital> preferences1=new ArrayList<>();
@@ -128,22 +130,24 @@ public class Lab4 {
            System.out.println(me.getValue()); 
        } 
         
-        //filtrez rezidentii care au in preferinte h0 si h2
-    List<Resident> rFilteredList=residentList.stream()
-          .filter(emp->emp.getPreferences().contains(h0))
-          .filter(emp->emp.getPreferences().contains(h2))
-          .collect(Collectors.toList());
-    
-    //filtrez spitalele care au r0 pe prima pozitie
-    List<Hospital> hFilteredList=preferences1.stream()
-            .filter(emp->emp.getResidentsList().get(0).equals(r0))
-            .collect(Collectors.toList());
- 
-    System.out.println("\nResidents who find acceptable H0 and H2:");  
-    System.out.println(rFilteredList); 
-    
-    System.out.println("\nHospitals that have R0 as their top preference:");  
-    System.out.println(hFilteredList); 
+        
+        
+        Set residentSet=new TreeSet<>();
+        residentSet.add(r0);
+        residentSet.add(r1);
+        residentSet.add(r2);
+        residentSet.add(r3);
+        
+        
+        Problem problem=new Problem();
+        problem.setHospitalSet(hospitalSet);
+        problem.setResitentSet(residentSet);
+        Matching matching=new Matching();
+        matching.setProblem(problem);
+        matching.createMatching();
+        System.out.println(matching);
+        System.out.println("Matching is stable?  -> "+matching.matchingIsStable());
+       
     
 }
 }
