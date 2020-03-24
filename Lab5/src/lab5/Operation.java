@@ -6,18 +6,24 @@
 package lab5;
 
 import java.awt.Desktop;
+import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  *
@@ -86,7 +92,7 @@ public class Operation {
         } 
     }
     
-    /*public void save() throws FileNotFoundException, IOException{
+    public void savePlainText() {
         List<Document> documents=catalog.getDocuments();
         try {
             FileWriter writer = new FileWriter(this.path, true);
@@ -100,7 +106,18 @@ public class Operation {
         } catch (IOException e) {
             e.printStackTrace();
         }
-       
+    }
+    
+    public void loadPlainText(){
+        Path path = Paths.get(this.path);
+        try (Stream<String> lines = Files.lines(path)) {
+        lines.forEachOrdered(line->System.out.println(line));
+        } catch (IOException e) {
+         System.err.println(e);
+        }
 
-    }*/
+          } 
+        
+        
+    
 }
